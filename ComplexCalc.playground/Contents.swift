@@ -15,8 +15,25 @@ class Calculator {
         return sum
     }
     
+    func add(lhs: (Int,Int), rhs: (Int,Int)) -> (Int,Int) {
+        return (lhs.0 + rhs.0,rhs.1 + lhs.1)
+    }
+    
+    func add(lhs: [String:Int], rhs: [String:Int]) -> [String:Int] {
+        return (["x":lhs["x"]! + rhs["x"]!,"y":rhs["y"]! + lhs["y"]!])
+    }
+    
     func subtract(lhs: Int, rhs: Int) -> Int {
         return lhs-rhs
+    }
+    
+    func subtract(lhs: (Int,Int), rhs: (Int,Int)) -> (Int,Int) {
+        
+        return (lhs.0 - rhs.0,lhs.1 - rhs.1)
+    }
+    
+    func subtract(lhs: [String:Int], rhs: [String:Int]) -> [String:Int] {
+        return (["x":lhs["x"]! - rhs["x"]!,"y":lhs["y"]! - rhs["y"]!])
     }
     
     func multiply(lhs: Int, rhs: Int) -> Int {
@@ -51,12 +68,13 @@ class Calculator {
         return op(lhs, rhs)
     }
     
-    func mathOp(_ args: [Int], beg: Int, op: (Int, Int) -> Int) -> Int {
+    func mathOp(args: [Int], beg: Int, op: (Int, Int) -> Int) -> Int {
         var start = beg
-        for i in beg..<args.count - 1 {
-            let second = args[i+1]
+        for i in 0..<args.count {
+            let second = args[i]
             start = op(start, second)
         }
+//        print(start)
         return start
     }
 }
@@ -92,16 +110,16 @@ calc.mathOp(args: [1, 2, 3, 4, 5], beg: 0, op: { $0 + $1 }) == 15
 calc.mathOp(args: [1, 1, 1, 1, 1], beg: 1, op: { $0 * $1 }) == 1
     // this is (((((1 op 1) op 1) op 1) op 1) op 1)
 
-//let p1 = (5, 5)
-//let p2 = (12, -27)
-//let p3 = (-4, 4)
-//let p4 = (0, 0)
-//calc.add(lhs: p1, rhs: p2) == (17, -22)
-//calc.subtract(lhs: p1, rhs: p2) == (-7, 32)
-//calc.add(lhs: p4, rhs: p4) == (0, 0)
-//calc.add(lhs: p3, rhs: p4) == (-4, 4)
-//
-//let pd1 = ["x": 5, "y": 5]
-//let pd2 = ["x": -4, "y": 4]
-//calc.add(lhs: pd1, rhs: pd2) == ["x": 1, "y": 9]
-//calc.subtract(lhs: pd1, rhs: pd2) == ["x": 9, "y": 1]
+let p1 = (5, 5)
+let p2 = (12, -27)
+let p3 = (-4, 4)
+let p4 = (0, 0)
+calc.add(lhs: p1, rhs: p2) == (17, -22)
+calc.subtract(lhs: p1, rhs: p2) == (-7, 32)
+calc.add(lhs: p4, rhs: p4) == (0, 0)
+calc.add(lhs: p3, rhs: p4) == (-4, 4)
+
+let pd1 = ["x": 5, "y": 5]
+let pd2 = ["x": -4, "y": 4]
+calc.add(lhs: pd1, rhs: pd2) == ["x": 1, "y": 9]
+calc.subtract(lhs: pd1, rhs: pd2) == ["x": 9, "y": 1]
